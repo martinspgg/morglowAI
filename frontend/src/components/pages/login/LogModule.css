@@ -109,6 +109,39 @@
     margin-top: 20px;
 }
 
+.input-log {
+    margin-top: 16px;
+    width: 260px;
+    background: transparent;
+    border: none;
+    border-bottom: 1px solid rgba(212, 175, 55, 0.4);
+    color: #F2F2F2;
+    font-family: 'Exo 2', sans-serif;
+    font-size: 13px;
+    letter-spacing: 1px;
+    padding: 8px 4px;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+.input-log::placeholder {
+    color: #555;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    font-size: 11px;
+}
+
+.input-log:focus {
+    border-bottom-color: #D4AF37;
+}
+
+.log-erro {
+    margin-top: 12px;
+    font-size: 11px;
+    letter-spacing: 1px;
+    color: #c0392b;
+}
+
 .btn-log {
     margin-top: 28px;
     background: linear-gradient(135deg, #b8922d, #D4AF37, #F0CE6A, #D4AF37);

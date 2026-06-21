@@ -1,13 +1,27 @@
-import { useState } from 'react'
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom'
 import './App.css'
 import Login from './components/pages/login/Log.jsx'
+import Home from './components/pages/home/Home.jsx'
+import Marketplace from './components/pages/marketplace/Marketplace.jsx'
+import Configuracoes from './components/pages/config/AccountConfig.jsx'
 
 function App() {
-
   return (
-    <>
-      <Login />
-    </>
+    <Router>
+      <Routes>
+        {/* Rota inicial que carrega a sua tela de login */}
+        <Route path="/" element={<Login />} />
+
+        {/* Rota para onde o usuário vai ao clicar em ENTRAR */}
+        <Route path="/home" element={<Home/>} />
+
+        {/* Rota para onde o usuário vai ao clicar em Marketplace */}
+        <Route path='/marketplace' element={<Marketplace/>} />
+
+        {/* Rota para o usúario vai ao clicar em Configurações */}
+        <Route path='/config' element={<Configuracoes/>}/>
+      </Routes>
+    </Router>
   )
 }
 

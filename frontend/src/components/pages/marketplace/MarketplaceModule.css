@@ -1,0 +1,174 @@
+.MarketContainer {
+    width: 100%;
+    height: 100%;
+    padding: 0 20px;
+}
+
+.backView {
+    background-color: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 15px;
+    width: 38px;
+    height: 38px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex-shrink: 0;
+    margin: 10px 4px 0;
+
+    && img {
+        width: 16px;
+        height: 16px;
+    }
+}
+.backView:hover {
+    cursor: pointer;
+}
+
+.MarketContent {
+    width: 100%;
+    height: 100%;
+}
+
+.MarketHeader {
+    display: flex;
+    align-items: center;
+    box-sizing: border-box;
+    margin: 15px 0;
+    padding: 0;
+}
+.MarketHeaderText {
+    margin: 10px 0 0 10px;
+}
+.MarketHeaderText h2 {
+    font-size: 19px;
+    line-height: 1.2;
+    font-weight: 600;
+    font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+}
+
+.eyebrow {
+    font-size: 11px;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+    color: #d4af37;
+    margin-bottom: 2px;
+}
+
+.MarketFiltro {
+    width: 100%;
+    padding: 10px 14px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: #1e1e1e;
+    color: #fff;
+    font-size: 14px;
+    box-sizing: border-box;
+    margin-bottom: 20px;
+    outline: none;
+}
+.MarketFiltro:focus {
+    border-color: #d4af37;
+}
+
+.MarketStatus {
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    text-align: center;
+    margin-top: 40px;
+}
+
+.MarketGrid {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    width: 100%;
+}
+
+.MarketCard {
+    background-color: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.08);
+    border-radius: 12px;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+    width: 100%;
+}
+
+.CardTipo {
+    font-size: 11px;
+    letter-spacing: 0.1em;
+    text-transform: uppercase;
+    color: #d4af37;
+}
+
+.CardNome {
+    font-size: 15px;
+    font-weight: bold;
+    color: #fff;
+    margin: 0;
+}
+
+.CardDesc {
+    font-size: 14px;
+    color: #8a8a8a;
+    flex: 1;
+}
+
+.CardValor {
+    font-size: 17px;
+    font-weight: 600;
+    color: #d4af37;
+    margin-top: 8px;
+}
+
+.ModalOverlay {
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+
+.ModalBox {
+    background-color: #1e1e1e;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    border-radius: 16px;
+    padding: 28px;
+    width: 320px;
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.ModalBox h2 {
+    font-size: 18px;
+    font-weight: 600;
+    color: #fff;
+    margin: 0;
+}
+
+.ModalBtnComprar {
+    margin-top: 10px;
+    padding: 12px;
+    border-radius: 10px;
+    border: none;
+    background-color: #d4af37;
+    color: #000;
+    font-weight: 700;
+    font-size: 14px;
+    cursor: pointer;
+}
+
+.ModalBtnFechar {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid rgba(255, 255, 255, 0.1);
+    background-color: transparent;
+    color: rgba(255, 255, 255, 0.5);
+    font-size: 14px;
+    cursor: pointer;
+}
