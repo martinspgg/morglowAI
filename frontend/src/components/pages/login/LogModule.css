@@ -1,0 +1,127 @@
+.logContainer {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.logSize {
+  height: 700px;
+  width: 600px;
+  border: 1px solid white;
+  border-radius: 20px;
+}
+
+.logContent {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    width: 100%;
+    height: 100%;
+}
+
+.logColor {
+    position: relative; 
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 550px;
+    height: 650px;
+}
+
+/* pseudoelementos de Logcolor: */
+/* Regra geral para os 4 cantos */
+.logColor::before,
+.logColor::after,
+.logColor .canto-inferior-esquerdo,
+.logColor .canto-inferior-direito {
+    content: "";
+    position: absolute;
+    width: 20px;       /* Comprimento da linha horizontal do L */
+    height: 20px;      /* Altura da linha vertical do L */
+    border: 2px solid #D4AF37; /* Espessura e cor dourada */
+}
+
+/* Canto Superior Esquerdo (Gera automaticamente via ::before) */
+.logColor::before {
+    top: 0;
+    left: 0;
+    border-right: none;
+    border-bottom: none;
+}
+
+/* Canto Superior Direito (Gera automaticamente via ::after) */
+.logColor::after {
+    top: 0;
+    right: 0;
+    border-left: none;
+    border-bottom: none;
+}
+
+/* Canto Inferior Esquerdo */
+.logColor .canto-inferior-esquerdo {
+    bottom: 0;
+    left: 0;
+    border-right: none;
+    border-top: none;
+}
+
+/* Canto Inferior Direito */
+.logColor .canto-inferior-direito {
+    bottom: 0;
+    right: 0;
+    border-left: none;
+    border-top: none;
+}
+
+.logoimg {
+    width: 250px;
+    padding-bottom: 20px;
+}
+
+.mg-w {
+    color: #F2F2F2;
+}
+.mg-g {
+    color: #D4AF37;
+}
+.s1-ai {
+    font-size: 16px;
+    font-weight: 300;
+    letter-spacing: 8px;
+    color: #D4AF37;
+    margin-top: 5px;
+}
+.s1-rule {
+    height: 1px;
+    width: 45%;
+    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
+    margin: 16px 32px 0px 32px;
+}
+.s1-tag {
+    font-size: 12px;
+    letter-spacing: 3px;
+    color: #888;
+    text-transform: uppercase;
+    margin-top: 20px;
+}
+
+.btn-log {
+    margin-top: 28px;
+    background: linear-gradient(135deg, #b8922d, #D4AF37, #F0CE6A, #D4AF37);
+    color: #0D0D0D;
+    border: none;
+    border-radius: 5px;
+    font-family: 'Exo 2', sans-serif;
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    padding: 15px 48px;
+    cursor: pointer;
+    position: relative;
+    overflow: hidden;
+}
