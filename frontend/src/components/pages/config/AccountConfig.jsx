@@ -161,7 +161,16 @@ function Config() {
               <button className='btn-primary'>
                 Salvar Alterações
               </button>
+
+              
             </div>
+            <button
+                type="button"
+                className="BtnVoltarHome"
+                onClick={() => navigate('/home')}
+              >
+                ← Voltar ao Dashboard
+              </button>
           </div>
         </div>
       </div>

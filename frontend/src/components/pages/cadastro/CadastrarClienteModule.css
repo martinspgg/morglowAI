@@ -1,0 +1,161 @@
+.CadastroContainer {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 20px;
+  background: #0b0b0b;
+}
+
+.CadastroContent {
+  display: flex;
+  flex-direction: column;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 14px 0 24px;
+}
+
+.CadastroHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.CadastroHeaderText {
+  margin-left: 12px;
+}
+
+.CadastroHeaderText h3 {
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 2px 0 0;
+  color: #fff;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d4af37;
+  margin: 0;
+}
+
+.backView {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.backView img {
+  width: 16px;
+  height: 16px;
+}
+
+.backView:hover {
+  cursor: pointer;
+}
+
+.CadastroForm {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+}
+
+.FormGroup {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.FormGroup label {
+  font-size: 14px;
+  color: #dcdcdc;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.FormGroup input {
+  width: 100%;
+  height: 58px;
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  color: #fff;
+  border-radius: 11px;
+  padding: 0 17px;
+  font-size: 18px;
+  outline: none;
+}
+
+.FormGroup input::placeholder {
+  color: #9a9a9a;
+}
+
+.FormGroup input:focus {
+  border-color: #d4af37;
+  box-shadow: 0 0 0 3px rgba(212, 175, 55, 0.12);
+}
+
+.CheckBoxCard {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 11px;
+  padding: 16px;
+  color: #e8e8e8;
+  font-size: 16px;
+  line-height: 1.45;
+  cursor: pointer;
+}
+
+.CheckBoxCard input {
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  flex-shrink: 0;
+  accent-color: #d4af37;
+}
+
+.BtnIniciar {
+  width: 100%;
+  height: 58px;
+  border: none;
+  border-radius: 11px;
+  background: linear-gradient(135deg, #e6c14e, #d4af37);
+  color: #1a1404;
+  font-size: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  cursor: pointer;
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.18);
+}
+
+.BtnVoltarBusca {
+  width: 100%;
+  height: 62px;
+  border-radius: 11px;
+  background: #0b0b0b;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  font-size: 18px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.ErroCadastro {
+  color: #ff6b6b;
+  font-size: 14px;
+  margin-top: -8px;
+}
+
+.BtnIniciar:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}

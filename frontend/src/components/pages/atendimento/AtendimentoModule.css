@@ -1,0 +1,188 @@
+.AtendimentoContainer {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 20px;
+  background: #0b0b0b;
+}
+
+.AtendimentoContent {
+  display: flex;
+  flex-direction: column;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.AtendimentoHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 22px;
+}
+
+.AtendimentoHeaderText {
+  margin-left: 12px;
+}
+
+.AtendimentoHeaderText h3 {
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 2px 0 0;
+  color: #fff;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d4af37;
+  margin: 0;
+}
+
+.backView {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.backView img {
+  width: 16px;
+  height: 16px;
+}
+
+.AtendimentoSearch {
+  margin-bottom: 18px;
+}
+
+.AtendimentoSearch input {
+  width: 100%;
+  height: 54px;
+  border-radius: 12px;
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  color: #fff;
+  padding: 0 18px;
+  font-size: 15px;
+  outline: none;
+}
+
+.AtendimentoSearch input::placeholder {
+  color: #9a9a9a;
+}
+
+.AtendimentoSearch input:focus {
+  border-color: #d4af37;
+}
+
+.ClienteGrid {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  width: 100%;
+}
+
+.ClienteCard {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 14px;
+  padding: 18px;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.ClienteCard:hover {
+  cursor: pointer;
+  border-color: rgba(212, 175, 55, 0.6);
+  background: #222;
+}
+
+.ClienteAvatar {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: rgba(212, 175, 55, 0.12);
+  color: #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 22px;
+  flex-shrink: 0;
+  margin-right: 16px;
+}
+
+.ClienteInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.CardNome {
+  color: #fff;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 1.2;
+}
+
+.CardTelefone {
+  color: #b8b8b8;
+  font-size: 14px;
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.CardAtendimentos {
+  color: #9a9a9a;
+  font-size: 14px;
+  line-height: 1.3;
+  margin-top: 2px;
+}
+
+.ClienteArrow {
+  color: #fff;
+  font-size: 30px;
+  line-height: 1;
+  margin-left: 12px;
+}
+
+.muted {
+  font-size: 14px;
+  color: #b8b8b8;
+  margin: 0;
+  line-height: 1.25;
+}
+
+.btn-cont {
+  margin-top: 24px;
+}
+
+.btn-outlin {
+  display: inline-flex;
+  background-color: transparent;
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.75);
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 18px;
+  border-radius: 12px;
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-outlin:hover {
+  background: rgba(212, 175, 55, 0.08);
+}
