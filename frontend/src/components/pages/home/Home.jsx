@@ -61,11 +61,11 @@ function Home() {
                 <div className='infoAccounts'>
                     {infoAccount.map((info, i) => (
                         <div className="homePainelContent" key={i}>
-                            <h1 className="dash-greeting">Olá,
+                            <h1 className="dash-greeting">Olá, 
                                 {(() => {
                                     if (info.L1_PROFI === 'Administrador')
                                         return <span className='admin-re'> Administrador</span>
-                                    return (info.L1_PROFI)
+                                    return <span> {info.L1_PROFI}</span>
                                 })()}
                                 👋</h1>
                             <p className="muted">Pronto para o próximo atendimento?</p>
