@@ -1,0 +1,190 @@
+.CapturaContainer {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 20px;
+  background: #0b0b0b;
+}
+
+.CapturaContent {
+  display: flex;
+  flex-direction: column;
+  max-width: 540px;
+  margin: 0 auto;
+  padding: 20px 0;
+}
+
+.CapturaHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 28px;
+}
+
+.CapturaHeaderText {
+  margin-left: 12px;
+}
+
+.CapturaHeaderText h3 {
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 2px 0 0;
+  color: #fff;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d4af37;
+  margin: 0;
+}
+
+.backView {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.backView img {
+  width: 16px;
+  height: 16px;
+}
+
+.FacePreviewBox {
+  width: 260px;
+  height: 270px;
+  margin: 0 auto 26px;
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.FacePlaceholder {
+  width: 210px;
+  height: 260px;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #9a9a9a;
+  font-size: 13px;
+  text-align: center;
+}
+
+.FacePreviewImage {
+  width: 210px;
+  height: 260px;
+  object-fit: cover;
+  border-radius: 50%;
+  border: 2px solid rgba(212, 175, 55, 0.45);
+}
+
+.corner {
+  position: absolute;
+  width: 18px;
+  height: 18px;
+  border-color: #d4af37;
+}
+
+.top-left {
+  top: 0;
+  left: 20px;
+  border-top: 2px solid #d4af37;
+  border-left: 2px solid #d4af37;
+}
+
+.top-right {
+  top: 0;
+  right: 20px;
+  border-top: 2px solid #d4af37;
+  border-right: 2px solid #d4af37;
+}
+
+.bottom-left {
+  bottom: 0;
+  left: 20px;
+  border-bottom: 2px solid #d4af37;
+  border-left: 2px solid #d4af37;
+}
+
+.bottom-right {
+  bottom: 0;
+  right: 20px;
+  border-bottom: 2px solid #d4af37;
+  border-right: 2px solid #d4af37;
+}
+
+.CapturaCardDics {
+  background: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.capture-tips-title {
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  margin: 0 0 10px;
+  color: #dcdcdc;
+}
+
+.CapturaCardDics ul {
+  list-style: none;
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  font-size: 13px;
+  color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.btn-primar {
+  margin-top: 16px;
+}
+
+.btn-primary {
+  background: linear-gradient(135deg, #e6c14e, #d4af37);
+  color: #1a1404;
+  box-shadow: 0 6px 24px rgba(212, 175, 55, 0.18);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 16px 18px;
+  border: none;
+  border-radius: 10px;
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.btn-outlin {
+  margin-top: 10px;
+  background: transparent;
+  color: #d4af37;
+  border: 1px solid rgba(212, 175, 55, 0.85);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  padding: 16px 18px;
+  border-radius: 10px;
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  cursor: pointer;
+}

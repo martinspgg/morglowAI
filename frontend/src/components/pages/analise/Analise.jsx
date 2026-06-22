@@ -13,6 +13,7 @@ function Analise() {
     const [erro, setErro] = useState('')
 
     async function finalizarAnalise() {
+        navigate('/captura')
         setErro('')
 
         if (!cliente) {
