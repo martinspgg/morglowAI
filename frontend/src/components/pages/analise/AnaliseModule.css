@@ -1,0 +1,159 @@
+.AnaliseContainer {
+  display: flex;
+  width: 100%;
+  min-height: 100vh;
+  justify-content: center;
+  align-items: center;
+  background: #0b0b0b;
+  padding: 20px;
+}
+
+.AnaliseContent {
+  width: 100%;
+  max-width: 394px;
+}
+
+.AnaliseHeader {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.AnaliseHeader h3 {
+  margin: 0;
+  font-size: 18px;
+  letter-spacing: 0.04em;
+}
+
+.logoMor {
+  color: #fff;
+}
+
+.logoGlow {
+  color: #d4af37;
+}
+
+.logoAi {
+  color: #c0c0c0;
+  font-size: 0.7em;
+  margin-left: 2px;
+}
+
+.AnaliseHeader p {
+  color: #fff;
+  margin: 2px 0;
+  font-size: 14px;
+}
+
+.Analiseinfos {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.btn-primary-analis {
+  background-color: #1e1e1e;
+  font-family: 'Roboto', 'Exo 2', system-ui, sans-serif;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  padding: 18px;
+  display: flex;
+  align-items: flex-start;
+  width: 100%;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.btn-primary-img {
+    font-size: 22px;
+    margin-right: 6px;
+    line-height: 1.65;
+}
+
+.btn-primary-analis strong {
+  font-size: 14px;
+  margin-bottom: 4px;
+}
+
+.btn-primary-analis p {
+  color: #b8b8b8;
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.35;
+}
+
+.btn-primary-analis:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  background: #222;
+}
+
+.AnaliseFooter {
+  text-align: center;
+  margin-top: 22px;
+}
+
+.AnaliseFooter p {
+  color: #a8a8a8;
+  font-size: 14px;
+}
+
+.AnaliseFooter strong {
+  color: #fff;
+}
+
+.BtnFinalizarAnalise {
+  width: 100%;
+  margin-top: 12px;
+  padding: 14px;
+  border: none;
+  border-radius: 10px;
+  background: linear-gradient(135deg, #e6c14e, #d4af37);
+  color: #1a1404;
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.BtnFinalizarAnalise:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.BtnVoltarAnalise {
+  width: 100%;
+  margin-top: 10px;
+  padding: 14px;
+  border-radius: 10px;
+  background: transparent;
+  color: #fff;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  font-weight: 700;
+  cursor: pointer;
+}
+
+.AnaliseErro {
+  color: #ff6b6b !important;
+  font-size: 13px;
+}
+
+.AnaliseLogo {
+  margin: 0;
+  font-size: 22px;
+  letter-spacing: 0.08em;
+  font-weight: 800;
+}
+
+.AnaliseTitulo {
+  margin-top: 10px;
+  color: #fff;
+  font-size: 22px;
+  line-height: 1.15;
+  font-weight: 700;
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+}
+
+.AnaliseSubtitulo {
+    font-size: 14px;
+    padding-top: 4px;
+    font-size: 13px;
+    letter-spacing: 0.08em;
+    font-family: 'Roboto', 'Exo 2', system-ui, sans-serif;
+}

@@ -160,3 +160,10 @@ body {
 .admin-re {
   color: red;
 }
+
+.homePainelInfo h1 {
+  font-size: 13px;
+  color: #c0c0c0;
+  margin-top: 5px;
+  letter-spacing: 0.03em;
+}

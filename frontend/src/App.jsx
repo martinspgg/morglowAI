@@ -6,6 +6,7 @@ import Marketplace from './components/pages/marketplace/Marketplace.jsx'
 import Configuracoes from './components/pages/config/AccountConfig.jsx'
 import Atendimento from './components/pages/atendimento/Atendimento.jsx'
 import CadastroCL from './components/pages/cadastro/CadastrarCliente.jsx'
+import Analise from "./components/pages/analise/Analise.jsx"
 
 function App() {
   return (
@@ -28,6 +29,9 @@ function App() {
 
         {/* Rota para o usúario vai ao clicar em Novo Cliente */}
         <Route path='/cadastrarCli' element={<CadastroCL />} />
+
+        {/* Rota para o usúario vai ao clicar em um cliente existente */}
+        <Route path='/analise' element={<Analise />} />
       </Routes>
     </Router>
   )

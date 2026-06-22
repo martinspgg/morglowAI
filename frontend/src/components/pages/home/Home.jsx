@@ -44,7 +44,15 @@ function Home() {
                             <span className="logo-ai">AI</span>
                         </h1>
 
-                        <p className="dash-salon">Barbearia Nova Era</p>
+                        <div className="homeInfoAccount">
+                            {infoAccount.map((info, i) => (
+                                <div className="homePainelInfo" key={i}>
+                                    <h1>
+                                        {info.L1_NOMEL}
+                                    </h1>
+                                </div>
+                            ))}
+                        </div>
                     </div>
 
                     <div className="homePainelOpcoes">
@@ -61,7 +69,7 @@ function Home() {
                 <div className='infoAccounts'>
                     {infoAccount.map((info, i) => (
                         <div className="homePainelContent" key={i}>
-                            <h1 className="dash-greeting">Olá, 
+                            <h1 className="dash-greeting">Olá,
                                 {(() => {
                                     if (info.L1_PROFI === 'Administrador')
                                         return <span className='admin-re'> Administrador</span>

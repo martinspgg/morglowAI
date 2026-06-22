@@ -76,7 +76,7 @@ function Atendimento() {
             return (
               <div
                 className="ClienteCard"
-                key={cliente.id} onClick={() => navigate('/analise')}
+                key={cliente.id} onClick={() => navigate('/analise', { state: { cliente } })}
               >
                 <div className="ClienteAvatar">
                   {iniciais}
