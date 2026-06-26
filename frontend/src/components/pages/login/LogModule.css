@@ -1,160 +1,329 @@
-.logContainer {
-    width: 100%;
-    height: 100vh;
-    display: flex;
-    align-items: center;
-    justify-content: center;
+/* ─── Root ──────────────────────────────────────────── */
+.lp-root {
+  display: flex;
+  width: 100vw;
+  height: 100vh;
+  overflow: hidden;
+  font-family: 'Exo 2', sans-serif;
 }
 
-.logSize {
-  height: 700px;
-  width: 600px;
-  border: 1px solid white;
-  border-radius: 20px;
+/* ─── PAINEL ESQUERDO ───────────────────────────────── */
+/*
+  Gradiente animado: o background-size 300% faz o gradiente ser
+  3× maior que o painel, e background-position se move para criar
+  um efeito de cores "fluindo" continuamente.
+*/
+.lp-left {
+  position: relative;
+  width: 47%;
+  height: 100%;
+  background: linear-gradient(
+    135deg,
+    #f0dbb0,
+    #e0c294,
+    #c8a472,
+    #d9bb7e,
+    #eacf9a,
+    #c8a472,
+    #e0c294
+  );
+  background-size: 350% 350%;
+  animation: gradientFlow 12s ease infinite;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
 }
 
-.logContent {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    flex-direction: column;
-    width: 100%;
-    height: 100%;
+@keyframes gradientFlow {
+  0%   { background-position: 0%   50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0%   50%; }
 }
 
-.logColor {
-    position: relative; 
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    width: 550px;
-    height: 650px;
+/* Orbe de luz suave que orbita o painel — cria "vida" no fundo */
+.lp-left::before {
+  content: '';
+  position: absolute;
+  width: 340px;
+  height: 340px;
+  border-radius: 50%;
+  background: radial-gradient(
+    circle,
+    rgba(255, 245, 205, 0.28) 0%,
+    transparent 68%
+  );
+  pointer-events: none;
+  z-index: 1;
+  animation: orbFloat 9s ease-in-out infinite;
+  top: 0;
+  left: 0;
 }
 
-/* pseudoelementos de Logcolor: */
-/* Regra geral para os 4 cantos */
-.logColor::before,
-.logColor::after,
-.logColor .canto-inferior-esquerdo,
-.logColor .canto-inferior-direito {
-    content: "";
-    position: absolute;
-    width: 20px;       /* Comprimento da linha horizontal do L */
-    height: 20px;      /* Altura da linha vertical do L */
-    border: 2px solid #D4AF37; /* Espessura e cor dourada */
+@keyframes orbFloat {
+  0%   { transform: translate(10%,  10%); opacity: 0.7; }
+  25%  { transform: translate(80%,  5%);  opacity: 1;   }
+  50%  { transform: translate(60%, 110%); opacity: 0.8; }
+  75%  { transform: translate(-5%, 80%);  opacity: 1;   }
+  100% { transform: translate(10%,  10%); opacity: 0.7; }
 }
 
-/* Canto Superior Esquerdo (Gera automaticamente via ::before) */
-.logColor::before {
-    top: 0;
-    left: 0;
-    border-right: none;
-    border-bottom: none;
+/* ── Dois retângulos animados ── */
+.lp-rect-1 {
+  position: absolute;
+  width: 200px;
+  height: 520px;
+  background: rgba(255, 238, 185, 0.36);
+  border-radius: 18px;
+  top: -90px;
+  right: -65px;
+  animation: rectSlide1 6s ease-in-out infinite;
 }
 
-/* Canto Superior Direito (Gera automaticamente via ::after) */
-.logColor::after {
-    top: 0;
-    right: 0;
-    border-left: none;
-    border-bottom: none;
+.lp-rect-2 {
+  position: absolute;
+  width: 180px;
+  height: 470px;
+  background: rgba(255, 238, 185, 0.20);
+  border-radius: 18px;
+  bottom: -80px;
+  left: -50px;
+  animation: rectSlide2 6s ease-in-out infinite 1.8s;
 }
 
-/* Canto Inferior Esquerdo */
-.logColor .canto-inferior-esquerdo {
-    bottom: 0;
-    left: 0;
-    border-right: none;
-    border-top: none;
+@keyframes rectSlide1 {
+  0%, 100% { transform: rotate(-20deg) translate(0px, 0px);    opacity: 0.65; }
+  50%       { transform: rotate(-20deg) translate(-42px, 30px); opacity: 1;    }
 }
 
-/* Canto Inferior Direito */
-.logColor .canto-inferior-direito {
-    bottom: 0;
-    right: 0;
-    border-left: none;
-    border-top: none;
+@keyframes rectSlide2 {
+  0%, 100% { transform: rotate(-20deg) translate(0px, 0px);   opacity: 0.45; }
+  50%       { transform: rotate(-20deg) translate(42px, -30px); opacity: 0.8;  }
 }
 
-.logoimg {
-    width: 250px;
-    padding-bottom: 20px;
+/* ── 3 listras brancas com shimmer sequencial ── */
+.lp-stripes {
+  position: absolute;
+  right: 0;
+  top: 0;
+  height: 100%;
+  display: flex;
+  gap: 5px;
+  align-items: stretch;
+  pointer-events: none;
+  z-index: 3;
+}
+.lp-stripes span {
+  width: 3px;
+  background: #ffffff;
+  animation: stripeShimmer 2.6s ease-in-out infinite;
+}
+.lp-stripes span:nth-child(2) { animation-delay: 0.45s; }
+.lp-stripes span:nth-child(3) { animation-delay: 0.9s;  }
+
+@keyframes stripeShimmer {
+  0%, 100% { opacity: 0.38; }
+  50%       { opacity: 1;    }
 }
 
-.mg-w {
-    color: #F2F2F2;
-}
-.mg-g {
-    color: #D4AF37;
-}
-.s1-ai {
-    font-size: 16px;
-    font-weight: 300;
-    letter-spacing: 8px;
-    color: #D4AF37;
-    margin-top: 5px;
-}
-.s1-rule {
-    height: 1px;
-    width: 45%;
-    background: linear-gradient(90deg, transparent, #D4AF37, transparent);
-    margin: 16px 32px 0px 32px;
-}
-.s1-tag {
-    font-size: 12px;
-    letter-spacing: 3px;
-    color: #888;
-    text-transform: uppercase;
-    margin-top: 20px;
+/* ── Logo: flutua para cima e para baixo + pulso de brilho ── */
+.lp-logo-wrap {
+  position: relative;
+  z-index: 4;
+  margin-bottom: 56px;
+  animation: logoFloat 4s ease-in-out infinite;
+  /* perspectiva para deixar a animação 3D mais rica */
+  transform-style: preserve-3d;
 }
 
-.input-log {
-    margin-top: 16px;
-    width: 260px;
-    background: transparent;
-    border: none;
-    border-bottom: 1px solid rgba(212, 175, 55, 0.4);
-    color: #F2F2F2;
-    font-family: 'Exo 2', sans-serif;
-    font-size: 13px;
-    letter-spacing: 1px;
-    padding: 8px 4px;
-    outline: none;
-    transition: border-color 0.2s;
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0px);  }
+  50%       { transform: translateY(-5px); }
 }
 
-.input-log::placeholder {
-    color: #555;
-    letter-spacing: 2px;
-    text-transform: uppercase;
-    font-size: 11px;
+.lp-logo-img {
+  width: clamp(200px, 22vw, 290px);
+  display: block;
+  mix-blend-mode: multiply;
+  animation: logoGlow 4s ease-in-out infinite;
 }
 
-.input-log:focus {
-    border-bottom-color: #D4AF37;
+@keyframes logoGlow {
+  0%, 100% { filter: drop-shadow(0 6px 18px rgba(180, 130, 30, 0.30)); }
+  50%       { filter: drop-shadow(0 14px 36px rgba(180, 130, 30, 0.65)) brightness(1.06); }
 }
 
-.log-erro {
-    margin-top: 12px;
-    font-size: 11px;
-    letter-spacing: 1px;
-    color: #c0392b;
+/* ── Frases rotativas ── */
+.lp-phrase {
+  position: relative;
+  z-index: 4;
+  text-align: center;
+  padding: 0 44px;
 }
 
-.btn-log {
-    margin-top: 28px;
-    background: linear-gradient(135deg, #b8922d, #D4AF37, #F0CE6A, #D4AF37);
-    color: #0D0D0D;
-    border: none;
-    border-radius: 5px;
-    font-family: 'Exo 2', sans-serif;
-    font-weight: 800;
-    font-size: 13px;
-    letter-spacing: 2.5px;
-    text-transform: uppercase;
-    padding: 15px 48px;
-    cursor: pointer;
-    position: relative;
-    overflow: hidden;
+.lp-phrase-in  { animation: phraseIn  0.7s ease both; }
+.lp-phrase-out { animation: phraseOut 0.7s ease both; }
+
+@keyframes phraseIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
 }
+@keyframes phraseOut {
+  from { opacity: 1; }
+  to   { opacity: 0; }
+}
+
+.lp-phrase-main {
+  font-size: clamp(24px, 3.4vw, 52px);
+  font-weight: 900;
+  color: #ffffff;
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin: 0;
+  line-height: 1.1;
+  white-space: nowrap;
+}
+
+.lp-phrase-ghost {
+  font-size: clamp(24px, 3.4vw, 52px);
+  font-weight: 900;
+  color: rgba(255, 255, 255, 0.20);
+  letter-spacing: 5px;
+  text-transform: uppercase;
+  margin-top: -6px;      /* levantado — sobrepõe levemente o texto principal */
+  line-height: 1.1;
+  white-space: nowrap;
+  user-select: none;
+  pointer-events: none;
+}
+
+/* ─── PAINEL DIREITO ────────────────────────────────── */
+.lp-right {
+  flex: 1;
+  height: 100%;
+  background: #ffffff;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.lp-card-wrapper {
+  position: relative;
+  width: clamp(360px, 38vw, 480px);
+  padding-top: 34px;
+}
+
+/* ── Avatar: círculo branco no canto superior-direito ── */
+.lp-avatar {
+  position: absolute;
+  top: 12px;
+  right: -14px;
+  width: 68px;
+  height: 68px;
+  background: #ffffff;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.08);
+}
+.lp-avatar svg {
+  width: 52%;
+  height: 52%;
+  stroke: #b8802a;
+  stroke-width: 1.8;
+  fill: none;
+  transform: translateX(-2px);
+}
+
+/* ── Card ── */
+.lp-card {
+  background: #e0c294;
+  border-radius: 16px;      /* bordas arredondadas conforme pedido */
+  padding: clamp(24px, 3vh, 36px) clamp(20px, 2.5vw, 30px) clamp(20px, 2.5vh, 30px);
+}
+
+/* ── Labels ── */
+.lp-label {
+  font-size: 13px;
+  font-weight: 500;
+  color: rgba(80, 45, 5, 0.75);
+  margin: 0 0 8px 2px;
+  letter-spacing: 0.3px;
+}
+.lp-label-mt { margin-top: 18px; }
+
+/* ── Campos de input ── */
+.lp-field {
+  display: flex;
+  align-items: center;
+  background: rgba(255, 255, 255, 0.32);
+  border-radius: 50px;
+  padding: 11px 16px;
+}
+
+.lp-field-icon {
+  width: 20px;
+  height: 20px;
+  stroke: rgba(100, 60, 10, 0.65);
+  flex-shrink: 0;
+  margin-right: 10px;
+}
+
+.lp-input {
+  flex: 1;
+  background: transparent;
+  border: none;
+  outline: none;
+  font-family: 'Exo 2', sans-serif;
+  font-size: 14px;
+  color: rgba(70, 40, 5, 0.85);
+  min-width: 0;
+}
+.lp-input::placeholder { color: rgba(100, 70, 20, 0.35); }
+
+/* ── Erro ── */
+.lp-erro {
+  font-size: 11px;
+  color: #9b2c2c;
+  margin: 10px 0 0 2px;
+  letter-spacing: 0.3px;
+}
+
+/* ── Botão ENTRAR ── */
+.lp-btn {
+  display: block;
+  width: 100%;
+  margin-top: 24px;
+  background: #f0e2c4;
+  border: none;
+  border-radius: 50px;
+  padding: 14px 0;
+  font-family: 'Exo 2', sans-serif;
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 1px;
+  color: #6b4500;
+  cursor: pointer;
+  transition: background 0.2s, transform 0.1s;
+}
+.lp-btn:hover:not(:disabled) {
+  background: #faf3e0;
+  transform: translateY(-1px);
+}
+.lp-btn:active:not(:disabled) { transform: translateY(0); }
+.lp-btn:disabled { opacity: 0.65; cursor: not-allowed; }
+
+/* ── Link criação de conta ── */
+.lp-create {
+  margin: 14px 0 0;
+  font-size: 12px;
+  color: rgba(80, 50, 5, 0.55);
+  text-align: center;
+  cursor: pointer;
+  letter-spacing: 0.3px;
+  transition: color 0.2s;
+}
+.lp-create:hover { color: rgba(80, 50, 5, 0.85); }
