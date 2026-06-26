@@ -71,6 +71,15 @@ function CadastrarCli() {
     <div className="CadastroContainer">
       <div className="CadastroContent">
 
+        <div className='ProgressBar'>
+          <span className='active'></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
         <div className="CadastroHeader">
           <button
             className="backView"

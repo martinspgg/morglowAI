@@ -77,12 +77,21 @@ function Captura() {
   }
 
   function confirmarContinuar() {
-    navigate('/analise')
+    navigate('/service')
   }
 
   return (
     <div className='CapturaContainer'>
       <div className='CapturaContent'>
+
+        <div className='ProgressBar'>
+          <span className='active'></span>
+          <span className='active'></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
 
         <div className="CapturaHeader">
           <button

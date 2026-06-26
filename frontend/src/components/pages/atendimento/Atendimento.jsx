@@ -41,6 +41,15 @@ function Atendimento() {
     <div className="AtendimentoContainer">
       <div className="AtendimentoContent">
 
+        <div className='ProgressBar'>
+          <span className='active'></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+
         <div className="AtendimentoHeader">
           <button
             className="backView"

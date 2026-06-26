@@ -1,0 +1,129 @@
+.cabeloContainer {
+  width: 100%;
+  min-height: 100vh;
+  padding: 0 20px;
+  background: #0b0b0b;
+}
+
+.cabeloContent {
+  display: flex;
+  flex-direction: column;
+  max-width: 540px;
+  min-height: 100vh;
+  margin: 0 auto;
+  padding: 8px 0 22px;
+}
+
+.ProgressBar {
+  display: grid;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 6px;
+  margin-bottom: 20px;
+}
+
+.ProgressBar span {
+  height: 3px;
+  border-radius: 999px;
+  background: #242424;
+}
+
+.ProgressBar span.active {
+  background: #d4af37;
+}
+
+.cabeloHeader {
+  display: flex;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.cabeloHeaderText {
+  margin-left: 12px;
+}
+
+.cabeloHeaderText h3 {
+  font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  line-height: 1.2;
+  margin: 2px 0 0;
+  color: #fff;
+}
+
+.eyebrow {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: #d4af37;
+  margin: 0;
+}
+
+.backView {
+  background-color: #1e1e1e;
+  border: 1px solid rgba(255, 255, 255, 0.08);
+  border-radius: 12px;
+  width: 48px;
+  height: 48px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.backView img {
+  width: 16px;
+  height: 16px;
+}
+
+.estilosCards {
+    padding: 5px;
+    display: flex;
+    gap: 12px;
+    width: 100%;
+    flex-wrap: wrap;
+}
+
+
+.cardHeader {
+    background: linear-gradient(135deg, rgb(42, 26, 14), rgb(122, 74, 32));
+    width: 100%;
+    height: 100%;
+}
+.card {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    overflow: hidden;
+    position: relative;
+    text-align: left;
+    width: calc(50% - 6px); 
+    min-height: 160px;   
+    background: #1e1e1e;
+    border: 1px solid var(--line);
+    border-radius: var(--radius);
+    color: var(--white);
+    transition: border-color 0.15s ease, background 0.15s ease;
+
+    border-top-left-radius: 15px;
+    border-top-right-radius: 15px;
+    border-bottom-left-radius: 15px;
+    border-bottom-right-radius: 15px;
+}
+
+.cardHeader {
+    height: 110px;
+}
+.cardDesc {
+    height: 60px;
+    padding: 10px;
+}
+.p1 {
+    font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
+    font-size: 13px;
+    font-weight: bold;
+}
+.p2 {
+    font-family: 'Roboto', 'Exo 2', system-ui, sans-serif;
+    font-size: 13px;
+    color: #8a8a8a;
+}

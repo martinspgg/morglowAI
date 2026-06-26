@@ -8,6 +8,8 @@ import Atendimento from './components/pages/atendimento/Atendimento.jsx'
 import CadastroCL from './components/pages/cadastro/CadastrarCliente.jsx'
 import Analise from "./components/pages/analise/Analise.jsx"
 import CapturaFacial from './components/pages/capturaFacial/CapturaFacial.jsx'
+import Service from './components/pages/servicos/Service.jsx'
+import Estilo from './components/pages/escolhaServicos/Estilo.jsx'
 
 function App() {
   return (
@@ -36,6 +38,12 @@ function App() {
 
         {/* Rota para o usúario vai ao clicar em iniciar analise */}
         <Route path='/captura' element={<CapturaFacial />} />
+
+        {/* Rota para o usúario vai ao clicar em Confirmar e continuar análise */}
+        <Route path='/service' element={<Service />} />
+
+        {/* Rota para o usúario vai ao clicar em Corte de Cabelo */}
+        <Route path="/estilo/:servico" element={<Estilo />} />
       </Routes>
     </Router>
   )
