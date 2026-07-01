@@ -1,3 +1,7 @@
 frontend/package-lock.json
 frontend/package.json
+frontend/env
+frontend/.env
 .env
+package-lock.json
+.vscode/settings.json
