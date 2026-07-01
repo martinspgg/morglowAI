@@ -8,11 +8,6 @@
 }
 
 /* ─── PAINEL ESQUERDO ───────────────────────────────── */
-/*
-  Gradiente animado: o background-size 300% faz o gradiente ser
-  3× maior que o painel, e background-position se move para criar
-  um efeito de cores "fluindo" continuamente.
-*/
 .lp-left {
   position: relative;
   width: 47%;
@@ -42,7 +37,7 @@
   100% { background-position: 0%   50%; }
 }
 
-/* Orbe de luz suave que orbita o painel — cria "vida" no fundo */
+/* Orbe de luz suave que orbita o painel */
 .lp-left::before {
   content: '';
   position: absolute;
@@ -102,7 +97,7 @@
   50%       { transform: rotate(-20deg) translate(42px, -30px); opacity: 0.8;  }
 }
 
-/* ── 3 listras brancas com shimmer sequencial ── */
+/* ── 3 listras com shimmer sequencial ── */
 .lp-stripes {
   position: absolute;
   right: 0;
@@ -127,19 +122,18 @@
   50%       { opacity: 1;    }
 }
 
-/* ── Logo: flutua para cima e para baixo + pulso de brilho ── */
+/* ── Logo ── */
 .lp-logo-wrap {
   position: relative;
   z-index: 4;
   margin-bottom: 56px;
-  animation: logoFloat 4s ease-in-out infinite;
-  /* perspectiva para deixar a animação 3D mais rica */
+  animation: logoFloat 5s ease-in-out infinite;
   transform-style: preserve-3d;
 }
 
 @keyframes logoFloat {
-  0%, 100% { transform: translateY(0px);  }
-  50%       { transform: translateY(-5px); }
+  0%, 100% { transform: translateY(0px); }
+  50%       { transform: translateY(-8px); }
 }
 
 .lp-logo-img {
@@ -189,9 +183,9 @@
   font-size: clamp(24px, 3.4vw, 52px);
   font-weight: 900;
   color: rgba(242, 242, 242, 0.20);
-  letter-spacing: 5px;
+  letter-spacing: 1px;
   text-transform: uppercase;
-  margin-top: -6px;      /* levantado — sobrepõe levemente o texto principal */
+  margin: 0px 0 0 0;
   line-height: 1.1;
   white-space: nowrap;
   user-select: none;
@@ -214,11 +208,11 @@
   padding-top: 34px;
 }
 
-/* ── Avatar: círculo branco no canto superior-direito ── */
+/* ── Avatar ── */
 .lp-avatar {
   position: absolute;
-  top: 12px;
-  right: -14px;
+  top: 22px;
+  right: -24px;
   width: 68px;
   height: 68px;
   background: #F2F2F2;
@@ -232,10 +226,9 @@
 .lp-avatar svg {
   width: 52%;
   height: 52%;
-  stroke: #9A7218;
+  stroke: #D4AF37;
   stroke-width: 1.8;
   fill: none;
-  transform: translateX(-2px);
 }
 
 /* ── Card ── */
@@ -260,7 +253,7 @@
 .lp-label {
   font-size: 13px;
   font-weight: 600;
-  color: rgba(100, 60, 10, 0.65);
+  color: rgba(70, 40, 5, 0.85);
   margin: 0 0 8px 10px;
   letter-spacing: 0.3px;
 }
@@ -278,7 +271,7 @@
 .lp-field-icon {
   width: 20px;
   height: 20px;
-  stroke: rgba(100, 60, 10, 0.65);
+  stroke: rgba(70, 40, 5, 0.85);
   flex-shrink: 0;
   margin-right: 10px;
 }
