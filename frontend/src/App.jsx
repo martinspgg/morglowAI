@@ -10,6 +10,7 @@ import Analise from "./components/pages/analise/Analise.jsx"
 import CapturaFacial from './components/pages/capturaFacial/CapturaFacial.jsx'
 import Service from './components/pages/servicos/Service.jsx'
 import Estilo from './components/pages/escolhaServicos/Estilo.jsx'
+import Historico from './components/pages/historico/Historico.jsx'
 
 function App() {
   return (
@@ -44,6 +45,9 @@ function App() {
 
         {/* Rota para o usúario vai ao clicar em Corte de Cabelo */}
         <Route path="/estilo/:servico" element={<Estilo />} />
+
+        {/* Rota para o usúario vai ao clicar em Histórico completo */}
+        <Route path="/historico" element={<Historico />} />
       </Routes>
     </Router>
   )

@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 0 20px;
-  background: #0b0b0b;
+  background: #0D0D0D;
 }
 
 .CadastroContent {
@@ -29,7 +29,7 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 2px 0 0;
-  color: #fff;
+  color: #F2F2F2;
 }
 
 .eyebrow {
@@ -42,7 +42,7 @@
 
 .backView {
   background-color: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   width: 48px;
   height: 48px;
@@ -75,7 +75,7 @@
 
 .FormGroup label {
   font-size: 14px;
-  color: #dcdcdc;
+  color: #C0C0C0;
   text-transform: uppercase;
   letter-spacing: 0.04em;
 }
@@ -84,8 +84,8 @@
   width: 100%;
   height: 58px;
   background: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  color: #fff;
+  border: 1px solid rgba(192, 192, 192, 0.2);
+  color: #F2F2F2;
   border-radius: 11px;
   padding: 0 17px;
   font-size: 18px;
@@ -93,7 +93,7 @@
 }
 
 .FormGroup input::placeholder {
-  color: #9a9a9a;
+  color: rgba(192, 192, 192, 0.6);
 }
 
 .FormGroup input:focus {
@@ -106,10 +106,10 @@
   align-items: flex-start;
   gap: 12px;
   background: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  border: 1px solid rgba(192, 192, 192, 0.2);
   border-radius: 11px;
   padding: 16px;
-  color: #e8e8e8;
+  color: #F2F2F2;
   font-size: 16px;
   line-height: 1.45;
   cursor: pointer;
@@ -141,9 +141,9 @@
   width: 100%;
   height: 62px;
   border-radius: 11px;
-  background: #0b0b0b;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  color: #fff;
+  background: #0D0D0D;
+  border: 1px solid rgba(192, 192, 192, 0.16);
+  color: #F2F2F2;
   font-size: 18px;
   font-weight: 700;
   cursor: pointer;
@@ -158,4 +158,19 @@
 .BtnIniciar:disabled {
   opacity: 0.6;
   cursor: not-allowed;
+}
+/* ─── Responsividade ────────────────────────────────── */
+@media (min-width: 768px) {
+  .CadastroContent { max-width: 640px; }
+}
+
+@media (max-width: 360px) {
+  .CadastroContainer { padding: 0 14px; }
+  .FormGroup input { height: 52px; font-size: 16px; }
+  .CadastroHeaderText h3 { font-size: 19px; }
+}
+
+/* Desktop */
+@media (min-width: 1100px) {
+  .CadastroContent { max-width: 720px; padding-top: 28px; }
 }

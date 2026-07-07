@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 0 20px;
-  background: #0b0b0b;
+  background: #0D0D0D;
 }
 
 .cabeloContent {
@@ -24,7 +24,7 @@
 .ProgressBar span {
   height: 3px;
   border-radius: 999px;
-  background: #242424;
+  background: #1E1E1E;
 }
 
 .ProgressBar span.active {
@@ -47,7 +47,7 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 2px 0 0;
-  color: #fff;
+  color: #F2F2F2;
 }
 
 .eyebrow {
@@ -60,7 +60,7 @@
 
 .backView {
   background-color: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   width: 48px;
   height: 48px;
@@ -90,7 +90,7 @@
   text-align: left;
   min-height: 130px;
   background: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   color: #f2f2f2;
   transition: border-color 0.15s ease, background 0.15s ease;
@@ -138,13 +138,13 @@
   font-size: 13px;
   font-weight: 800;
   margin: 0 0 2px;
-  color: #fff;
+  color: #F2F2F2;
 }
 
 .p2 {
   font-family: 'Roboto', 'Exo 2', system-ui, sans-serif;
   font-size: 11px;
-  color: #9a9a9a;
+  color: rgba(192, 192, 192, 0.6);
   margin: 0;
   line-height: 1.25;
 }
@@ -152,20 +152,20 @@
 .variacaoCorBox {
   margin-top: 14px;
   background: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   padding: 14px;
 }
 
 .variacaoCorBox h3 {
   font-size: 12px;
-  color: #dcdcdc;
+  color: #C0C0C0;
   letter-spacing: 0.08em;
   margin: 0 0 8px;
 }
 
 .variacaoCorBox p {
-  color: #9a9a9a;
+  color: rgba(192, 192, 192, 0.6);
   font-size: 12px;
   line-height: 1.4;
   margin: 0 0 12px;
@@ -180,7 +180,7 @@
 .corOption {
   background: #2a2a2a;
   color: #f2f2f2;
-  border: 1px solid rgba(255, 255, 255, 0.14);
+  border: 1px solid rgba(192, 192, 192, 0.22);
   border-radius: 999px;
   padding: 5px 12px;
   font-size: 11px;
@@ -216,4 +216,21 @@
 .BtnGerarSimu button:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+/* ─── Responsividade ────────────────────────────────── */
+@media (min-width: 768px) {
+  .cabeloContent { max-width: 700px; }
+  .estilosCards { grid-template-columns: repeat(3, 1fr); }
+}
+
+@media (max-width: 360px) {
+  .cabeloContainer { padding: 0 14px; }
+  .estilosCards { grid-template-columns: 1fr; }
+}
+
+/* Desktop */
+@media (min-width: 1100px) {
+  .cabeloContent { max-width: 880px; padding-top: 24px; }
+  .estilosCards { grid-template-columns: repeat(4, 1fr); gap: 12px; }
+  .cardHeader { height: 96px; }
 }

@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 0 20px;
-  background: #0b0b0b;
+  background: #0D0D0D;
 }
 
 .CapturaContent {
@@ -29,7 +29,7 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 2px 0 0;
-  color: #fff;
+  color: #F2F2F2;
 }
 
 .eyebrow {
@@ -42,7 +42,7 @@
 
 .backView {
   background-color: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   width: 48px;
   height: 48px;
@@ -75,7 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  color: #9a9a9a;
+  color: rgba(192, 192, 192, 0.6);
   font-size: 13px;
   text-align: center;
 }
@@ -125,7 +125,7 @@
 
 .CapturaCardDics {
   background: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   padding: 16px;
 }
@@ -136,7 +136,7 @@
   text-transform: uppercase;
   letter-spacing: 0.06em;
   margin: 0 0 10px;
-  color: #dcdcdc;
+  color: #C0C0C0;
 }
 
 .CapturaCardDics ul {
@@ -187,4 +187,24 @@
   font-size: 16px;
   font-weight: 700;
   cursor: pointer;
+}
+/* ─── Responsividade ────────────────────────────────── */
+@media (min-width: 768px) {
+  .CapturaContent { max-width: 640px; }
+}
+
+@media (max-width: 360px) {
+  .CapturaContainer { padding: 0 14px; }
+  .FacePreviewBox { width: 220px; height: 240px; }
+  .FacePlaceholder,
+  .FacePreviewImage { width: 180px; height: 230px; }
+  .CapturaHeaderText h3 { font-size: 19px; }
+}
+
+/* Desktop */
+@media (min-width: 1100px) {
+  .CapturaContent { max-width: 720px; padding-top: 32px; }
+  .FacePreviewBox { width: 300px; height: 310px; }
+  .FacePlaceholder,
+  .FacePreviewImage { width: 250px; height: 300px; }
 }

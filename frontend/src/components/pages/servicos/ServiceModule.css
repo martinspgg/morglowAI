@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 0 20px;
-  background: #0b0b0b;
+  background: #0D0D0D;
 }
 
 .ServiceContent {
@@ -24,7 +24,7 @@
 .ProgressBar span {
   height: 3px;
   border-radius: 999px;
-  background: #242424;
+  background: #1E1E1E;
 }
 
 .ProgressBar span.active {
@@ -47,7 +47,7 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 2px 0 0;
-  color: #fff;
+  color: #F2F2F2;
 }
 
 .eyebrow {
@@ -60,7 +60,7 @@
 
 .backView {
   background-color: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   width: 48px;
   height: 48px;
@@ -76,7 +76,7 @@
 }
 
 .ServiceDescription {
-  color: #9a9a9a;
+  color: rgba(192, 192, 192, 0.6);
   font-size: 14px;
   margin: 0 0 18px;
 }
@@ -91,8 +91,8 @@
 .ServiceCard {
   min-height: 110px;
   background: #1e1e1e;
-  color: #fff;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  color: #F2F2F2;
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   display: flex;
   flex-direction: column;
@@ -141,4 +141,21 @@
 .BtnEscolherEstilo:disabled {
   opacity: 0.45;
   cursor: not-allowed;
+}
+/* ─── Responsividade ────────────────────────────────── */
+@media (min-width: 768px) {
+  .ServiceContent { max-width: 640px; }
+  .ServiceCard { min-height: 130px; }
+}
+
+@media (max-width: 360px) {
+  .ServiceContainer { padding: 0 14px; }
+  .ServiceGrid { grid-template-columns: 1fr; }
+}
+
+/* Desktop */
+@media (min-width: 1100px) {
+  .ServiceContent { max-width: 880px; padding-top: 24px; }
+  .ServiceGrid { grid-template-columns: repeat(4, 1fr); }
+  .ServiceCard { min-height: 140px; }
 }

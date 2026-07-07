@@ -2,7 +2,7 @@
   width: 100%;
   min-height: 100vh;
   padding: 0 20px;
-  background: #0b0b0b;
+  background: #0D0D0D;
 }
 
 .ColoracaoContent {
@@ -28,11 +28,11 @@
 .ColoracaoProgress span {
   height: 3px;
   border-radius: 999px;
-  background: #242424;
+  background: #1E1E1E;
 }
 
 .ColoracaoProgress span.active {
-  background: #8b5cf6;
+  background: #d4af37;
 }
 
 /* ==========================
@@ -55,20 +55,20 @@
   font-weight: 700;
   line-height: 1.2;
   margin: 2px 0 0;
-  color: #fff;
+  color: #F2F2F2;
 }
 
 .ColoracaoEyebrow {
   font-size: 12px;
   letter-spacing: .14em;
   text-transform: uppercase;
-  color: #8b5cf6;
+  color: #d4af37;
   margin: 0;
 }
 
 .ColoracaoBack {
   background-color: #1e1e1e;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   width: 48px;
   height: 48px;
@@ -105,7 +105,7 @@
   width: calc(50% - 6px);
   min-height: 160px;
   background: #1e1e1e;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 15px;
   color: #f2f2f2;
   transition: .15s;
@@ -113,17 +113,17 @@
 
 .ColoracaoCard:hover {
   cursor: pointer;
-  border-color: rgba(139,92,246,.55);
+  border-color: rgba(212, 175, 55, 0.55);
   background: #222;
 }
 
 .ColoracaoCard.selected {
-  border-color: #8b5cf6;
+  border-color: #d4af37;
 }
 
 .ColoracaoImagem {
   height: 110px;
-  background: linear-gradient(135deg,#5c34d6,#8b5cf6);
+  background: linear-gradient(135deg, rgb(42, 26, 14), rgb(122, 74, 32));
 }
 
 .ColoracaoImagem img {
@@ -147,7 +147,7 @@
 .ColoracaoDescricao {
   font-family: 'Roboto','Exo 2',sans-serif;
   font-size: 13px;
-  color: #8a8a8a;
+  color: rgba(192, 192, 192, 0.6);
   margin-top: 4px;
 }
 
@@ -162,7 +162,7 @@
   border-radius: 50%;
 
   background: #181818;
-  color: #8b5cf6;
+  color: #d4af37;
 
   display: flex;
   align-items: center;
@@ -179,20 +179,20 @@
 .ColoracaoPainel {
   margin-top: 14px;
   background: #1e1e1e;
-  border: 1px solid rgba(255,255,255,.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 12px;
   padding: 14px;
 }
 
 .ColoracaoPainelTitulo {
   font-size: 12px;
-  color: #dcdcdc;
+  color: #C0C0C0;
   letter-spacing: .08em;
   margin: 0 0 8px;
 }
 
 .ColoracaoPainelTexto {
-  color: #9a9a9a;
+  color: rgba(192, 192, 192, 0.6);
   font-size: 12px;
   line-height: 1.4;
   margin: 0 0 12px;
@@ -207,7 +207,7 @@
 .ColoracaoChip {
   background: #2a2a2a;
   color: #f2f2f2;
-  border: 1px solid rgba(255,255,255,.14);
+  border: 1px solid rgba(192, 192, 192, 0.22);
   border-radius: 999px;
   padding: 5px 12px;
   font-size: 11px;
@@ -216,13 +216,13 @@
 }
 
 .ColoracaoChip:hover {
-  border-color: rgba(139,92,246,.7);
+  border-color: rgba(212, 175, 55, 0.7);
 }
 
 .ColoracaoChip.selected {
-  border-color: #8b5cf6;
-  background: rgba(139,92,246,.18);
-  color: #8b5cf6;
+  border-color: #d4af37;
+  background: rgba(212, 175, 55, 0.18);
+  color: #d4af37;
 }
 
 /* ==========================
@@ -255,4 +255,20 @@
 
 .ColoracaoBotao button:hover:not(:disabled) {
   transform: translateY(-1px);
+}
+/* ─── Responsividade ────────────────────────────────── */
+@media (min-width: 768px) {
+  .ColoracaoContent { max-width: 700px; }
+  .ColoracaoCard { width: calc(33.333% - 8px); }
+}
+
+@media (max-width: 360px) {
+  .ColoracaoContainer { padding: 0 14px; }
+  .ColoracaoCard { width: 100%; }
+}
+
+/* Desktop */
+@media (min-width: 1100px) {
+  .ColoracaoContent { max-width: 880px; padding-top: 24px; }
+  .ColoracaoCard { width: calc(25% - 9px); }
 }

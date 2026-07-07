@@ -1,12 +1,12 @@
 body {
-  background-color: #0b0b0b;
-  color: white;
+  background-color: #0D0D0D;
+  color: #F2F2F2;
 }
 
 .homeContainer {
   width: 100%;
   min-height: 100vh;
-  background: #0b0b0b;
+  background: #0D0D0D;
   padding: 0 20px;
 }
 
@@ -35,7 +35,7 @@ body {
 }
 
 .logo-mor {
-  color: white;
+  color: #F2F2F2;
 }
 
 .logo-glow {
@@ -52,7 +52,7 @@ body {
 
 .dash-salon {
   font-size: 14px;
-  color: #dcdcdc;
+  color: #C0C0C0;
   margin: 8px 0 0;
 }
 
@@ -64,7 +64,7 @@ body {
 
 .homePainelOpcoes button {
   background-color: #1e1e1e;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   border-radius: 13px;
   width: 48px;
   height: 48px;
@@ -88,12 +88,12 @@ body {
   font-size: 23px;
   font-weight: 700;
   margin: 0 0 6px;
-  color: #fff;
+  color: #F2F2F2;
 }
 
 .muted {
   font-size: 16px;
-  color: #9a9a9a;
+  color: rgba(192, 192, 192, 0.6);
   margin: 0;
 }
 
@@ -124,7 +124,7 @@ body {
   font-weight: 800;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #dcdcdc;
+  color: #C0C0C0;
   margin: 0;
 }
 
@@ -138,7 +138,7 @@ body {
 .btn-historic {
   background: transparent;
   color: #f2f2f2;
-  border: 1px solid rgba(255, 255, 255, 0.08);
+  border: 1px solid rgba(192, 192, 192, 0.16);
   min-height: 46px;
   border-radius: 12px;
   font-family: 'Exo 2', 'Roboto', system-ui, sans-serif;
@@ -166,4 +166,103 @@ body {
   color: #c0c0c0;
   margin-top: 5px;
   letter-spacing: 0.03em;
+}
+/* ─── Responsividade ────────────────────────────────── */
+@media (min-width: 768px) {
+  .homePainel { max-width: 640px; }
+}
+
+@media (max-width: 360px) {
+  .homeContainer { padding: 0 14px; }
+  .homePainelOpcoes button { width: 42px; height: 42px; }
+  .dash-greeting { font-size: 20px; }
+  .btn-primarydash-cta { padding: 16px 14px; font-size: 16px; }
+}
+
+/* Desktop */
+@media (min-width: 1100px) {
+  .homePainel { max-width: 720px; padding: 40px 0; }
+}
+
+/* ─── Recentes (máx. 4 clientes) ────────────────────── */
+.homeRecentesLista {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 12px 0 18px;
+}
+
+.homeRecentesVazio {
+  font-size: 14px;
+  color: rgba(192, 192, 192, 0.6);
+  margin: 4px 0;
+}
+
+.homeRecenteCard {
+  display: flex;
+  align-items: center;
+  background: #1e1e1e;
+  border: 1px solid rgba(192, 192, 192, 0.16);
+  border-radius: 12px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition: border-color 0.15s ease, background 0.15s ease;
+}
+
+.homeRecenteCard:hover {
+  border-color: rgba(212, 175, 55, 0.6);
+  background: #222;
+}
+
+.homeRecenteAvatar {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1px solid rgba(212, 175, 55, 0.55);
+  background: rgba(212, 175, 55, 0.12);
+  color: #d4af37;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  font-size: 15px;
+  flex-shrink: 0;
+  margin-right: 12px;
+}
+
+.homeRecenteInfo {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.homeRecenteNome {
+  color: #F2F2F2;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 1.2;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.homeRecenteAtend {
+  color: rgba(192, 192, 192, 0.6);
+  font-size: 12px;
+  margin-top: 2px;
+}
+
+.homeRecenteArrow {
+  color: #C0C0C0;
+  font-size: 22px;
+  line-height: 1;
+  margin-left: 10px;
+}
+
+@media (min-width: 768px) {
+  .homeRecentesLista {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+  }
 }

@@ -9,10 +9,26 @@ function Home() {
     const navigate = useNavigate()
 
     const [infoAccount, setInfoAccount] = useState([])
+    const [recentes, setRecentes] = useState([])
 
-    useEffect(() => {
-        infoConta()
-    }, [])
+    async function buscarRecentes() {
+        const { data: { user } } = await supabase.auth.getUser()
+        if (!user) return
+
+        const { data, error } = await supabase
+            .from('A3_CLIENTE')
+            .select('*')
+            .gt('A3_NATEND', 0)
+            .order('id', { ascending: false })
+            .limit(4)
+
+        if (error) {
+            console.error('Erro ao buscar clientes recentes:', error)
+            return
+        }
+
+        setRecentes(data || [])
+    }
 
     async function infoConta() {
         const { data: { user } } = await supabase.auth.getUser()
@@ -31,6 +47,11 @@ function Home() {
 
         setInfoAccount(data ? [data] : [])
     }
+
+    useEffect(() => {
+        infoConta()
+        buscarRecentes()
+    }, [])
 
     return (
         <div className="homeContainer">
@@ -92,8 +113,49 @@ function Home() {
                     <h2>Recentes</h2>
                 </div>
 
+                <div className="homeRecentesLista">
+                    {recentes.length === 0 && (
+                        <p className="homeRecentesVazio">Nenhum cliente atendido ainda.</p>
+                    )}
+
+                    {recentes.map((cliente) => {
+                        const iniciais = cliente.A3_NOME
+                            ?.split(' ')
+                            .slice(0, 2)
+                            .map(nome => nome[0])
+                            .join('')
+                            .toUpperCase()
+
+                        return (
+                            <div
+                                className="homeRecenteCard"
+                                key={cliente.id}
+                                onClick={() => navigate('/analise', { state: { cliente } })}
+                            >
+                                <div className="homeRecenteAvatar">
+                                    {iniciais}
+                                </div>
+
+                                <div className="homeRecenteInfo">
+                                    <span className="homeRecenteNome">
+                                        {cliente.A3_NOME}
+                                    </span>
+                                    <span className="homeRecenteAtend">
+                                        {cliente.A3_NATEND || 0} atendimento(s)
+                                    </span>
+                                </div>
+
+                                <span className="homeRecenteArrow">›</span>
+                            </div>
+                        )
+                    })}
+                </div>
+
                 <div className="homePainelRecentes">
-                    <button className="btn-historic">
+                    <button
+                        className="btn-historic"
+                        onClick={() => navigate('/historico')}
+                    >
                         Histórico completo
                     </button>
 
