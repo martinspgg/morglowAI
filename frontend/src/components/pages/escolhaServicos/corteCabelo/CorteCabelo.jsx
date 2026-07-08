@@ -2,6 +2,7 @@ import './CorteCabeloModule.css'
 import { useNavigate } from 'react-router-dom'
 import back from '../../../../images/move-left.png'
 import { useState } from 'react'
+import BuscaEstiloWeb from '../../../shared/BuscaEstiloWeb.jsx'
 
 function CorteCabelo() {
   const navigate = useNavigate()
@@ -89,6 +90,14 @@ function CorteCabelo() {
             <h3>Escolha o estilo</h3>
           </div>
         </div>
+
+        <BuscaEstiloWeb
+          contexto="haircut"
+          placeholder="Buscar corte de cabelo na web..."
+          variacoesPadrao={['Natural', 'Tom claro', 'Tom escuro']}
+          selecionadoId={estiloSelecionado?.webId}
+          onSelecionar={selecionarEstilo}
+        />
 
         <div className="estilosCards">
           {estilos.map((item, index) => (

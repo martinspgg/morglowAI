@@ -2,6 +2,7 @@ import './BarbaModule.css'
 import { useNavigate } from 'react-router-dom'
 import back from '../../../../images/move-left.png'
 import { useState } from 'react'
+import BuscaEstiloWeb from '../../../shared/BuscaEstiloWeb.jsx'
 
 function Barba() {
   const navigate = useNavigate()
@@ -89,6 +90,14 @@ function Barba() {
             <h3>Escolha a barba</h3>
           </div>
         </div>
+
+        <BuscaEstiloWeb
+          contexto="beard"
+          placeholder="Buscar estilo de barba na web..."
+          variacoesPadrao={['Natural', 'Aparada', 'Cheia']}
+          selecionadoId={estiloSelecionado?.webId}
+          onSelecionar={selecionarEstilo}
+        />
 
         <div className="estilosCards">
           {estilos.map((item, index) => (

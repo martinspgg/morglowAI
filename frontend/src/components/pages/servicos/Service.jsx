@@ -2,6 +2,7 @@ import './ServiceModule.css'
 import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import back from '../../../images/move-left.png'
+import { setServico as salvarServico } from '../../../lib/atendimentoFlow'
 
 function Service() {
   const navigate = useNavigate()
@@ -75,7 +76,10 @@ function Service() {
         <button
           className='BtnEscolherEstilo'
           disabled={!servico}
-          onClick={() => navigate(`/estilo/${servico}`)}
+          onClick={() => {
+            salvarServico(servico)
+            navigate(`/estilo/${servico}`)
+          }}
         >
           Escolher estilo →
         </button>

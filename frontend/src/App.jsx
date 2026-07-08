@@ -11,6 +11,8 @@ import CapturaFacial from './components/pages/capturaFacial/CapturaFacial.jsx'
 import Service from './components/pages/servicos/Service.jsx'
 import Estilo from './components/pages/escolhaServicos/Estilo.jsx'
 import Historico from './components/pages/historico/Historico.jsx'
+import Simulacao from './components/pages/simulacao/Simulacao.jsx'
+import Resultado from './components/pages/resultado/Resultado.jsx'
 
 function App() {
   return (
@@ -48,6 +50,12 @@ function App() {
 
         {/* Rota para o usúario vai ao clicar em Histórico completo */}
         <Route path="/historico" element={<Historico />} />
+
+        {/* Rota para o usúario vai ao clicar em Gerar Simulação (Tela 04 — Processamento IA) */}
+        <Route path="/simulacao" element={<Simulacao />} />
+
+        {/* Rota do resultado antes/depois (Tela 05) */}
+        <Route path="/resultado" element={<Resultado />} />
       </Routes>
     </Router>
   )

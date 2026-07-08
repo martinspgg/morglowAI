@@ -2,6 +2,7 @@ import './AnaliseModule.css'
 import { useNavigate, useLocation } from 'react-router-dom'
 import { useState } from 'react'
 import { supabase } from '../../../lib/supabase'
+import { setCliente, limparAtendimento } from '../../../lib/atendimentoFlow'
 
 function Analise() {
     const navigate = useNavigate()
@@ -13,7 +14,6 @@ function Analise() {
     const [erro, setErro] = useState('')
 
     async function finalizarAnalise() {
-        navigate('/captura')
         setErro('')
 
         if (!cliente) {
@@ -34,14 +34,12 @@ function Analise() {
 
             if (error) throw error
 
-            await supabase
-                .from('A3_CLIENTE')
-                .update({
-                    A3_NATEND: Number(cliente.A3_NATEND || 0) + 1
-                })
-                .eq('id', cliente.id)
+            // Novo atendimento: zera o fluxo anterior e guarda o cliente.
+            // O A3_NATEND só é incrementado na aprovação do resultado (Tela 06).
+            limparAtendimento()
+            setCliente(cliente)
 
-            navigate('/home')
+            navigate('/captura')
         } catch (err) {
             console.error(err)
             setErro('Erro ao salvar atendimento.')

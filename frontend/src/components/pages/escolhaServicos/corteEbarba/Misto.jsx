@@ -2,6 +2,7 @@ import './MistoModule.css'
 import { useNavigate } from 'react-router-dom'
 import back from '../../../../images/move-left.png'
 import { useState } from 'react'
+import BuscaEstiloWeb from '../../../shared/BuscaEstiloWeb.jsx'
 
 function Misto() {
   const navigate = useNavigate()
@@ -89,6 +90,14 @@ function Misto() {
             <h3>Escolha o combo</h3>
           </div>
         </div>
+
+        <BuscaEstiloWeb
+          contexto="haircut beard"
+          placeholder="Buscar corte + barba na web..."
+          variacoesPadrao={['Natural', 'Tom claro', 'Tom escuro']}
+          selecionadoId={comboSelecionado?.webId}
+          onSelecionar={selecionarCombo}
+        />
 
         <div className="estilosCards">
           {combos.map((item, index) => (

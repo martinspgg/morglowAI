@@ -2,6 +2,7 @@ import './CapturaFacialModule.css'
 import back from '../../../images/move-left.png'
 import { useNavigate } from 'react-router-dom'
 import { useRef, useState } from 'react'
+import { setFoto } from '../../../lib/atendimentoFlow'
 
 function Captura() {
   const navigate = useNavigate()
@@ -47,7 +48,7 @@ function Captura() {
     const context = canvas.getContext('2d')
     context.drawImage(video, 0, 0, canvas.width, canvas.height)
 
-    const imagem = canvas.toDataURL('image/png')
+    const imagem = canvas.toDataURL('image/jpeg', 0.85)
     setImagemPreview(imagem)
 
     fecharCamera()
@@ -67,8 +68,9 @@ function Captura() {
 
     if (!arquivo) return
 
-    const urlImagem = URL.createObjectURL(arquivo)
-    setImagemPreview(urlImagem)
+    const leitor = new FileReader()
+    leitor.onload = () => setImagemPreview(leitor.result)
+    leitor.readAsDataURL(arquivo)
   }
 
   function refazerFoto() {
@@ -77,6 +79,9 @@ function Captura() {
   }
 
   function confirmarContinuar() {
+    if (!imagemPreview) return
+
+    setFoto(imagemPreview)
     navigate('/service')
   }
 
