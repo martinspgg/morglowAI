@@ -10,7 +10,7 @@ O app é operado pelo profissional (cabeleireiro/barbeiro) em tablet ou smartpho
 |---|---|
 | Frontend | React + Vite (JavaScript), CSS puro por módulo de página |
 | Backend / Auth / Banco | Supabase (PostgreSQL, Auth, Edge Functions) |
-| Geração de imagem por IA | A definir (candidatos: Flux 2 Pro, Imagen 4 Ultra, Gemini) — mock ativo |
+| Geração de imagem por IA | Supabase Edge Function `gerar-simulacao` com provider FLUX/HTTP compatível e fallback mock |
 | Busca de estilos na web | Google Custom Search → Pexels → Openverse (conforme chave no `.env`) |
 
 ## Identidade visual
@@ -31,7 +31,95 @@ Responsividade em 4 faixas: `<=360px` (celulares pequenos), base mobile, `>=768p
 8. **Processamento IA** (`/simulacao`) — Tela 04: animação + chamada de geração
 9. **Resultado** (`/resultado`) — Tela 05: antes/depois, variações, aprovação (incrementa `A3_NATEND`)
 
-Estado do fluxo compartilhado via `frontend/src/lib/atendimentoFlow.js` (sessionStorage). Geração via `frontend/src/lib/geracao.js` (`USAR_MOCK = true` — o mock aplica filtros na própria foto; a chamada real vai para a Edge Function `supabase/functions/gerar-simulacao`).
+Estado do fluxo compartilhado via `frontend/src/lib/atendimentoFlow.js` (sessionStorage). Geração via `frontend/src/lib/geracao.js` (`USAR_MOCK = true` — o mock aplica filtros na própria foto; quando a flag for alterada para produção, a chamada real vai para a Edge Function `supabase/functions/gerar-simulacao`).
+
+## Edge Function `gerar-simulacao`
+
+A função em `supabase/functions/gerar-simulacao` implementa o backend de geração real/fallback da simulação sem alterar o frontend. Ela aceita `POST` com JSON, responde `OPTIONS` para CORS e normaliza campos flexíveis enviados pelo app ou por integrações futuras.
+
+Campos aceitos para imagem: `foto`, `image`, `imageUrl`, `image_url`, `fotoUrl`, `originalImage`, `original_image`, `base64`.
+
+Campos aceitos para serviço: `servico`, `service`, `serviceType`, `tipoServico`. O serviço é normalizado internamente para `haircut`, `color`, `beard`, `haircut_beard` ou `unknown`.
+
+Campos aceitos para estilo/cor/atendimento: `estilo`, `style`, `selectedStyle`, `selected_style`, `cor`, `color`, `selectedColor`, `selected_color`, `variacaoCor`, `variacaoEscolhida`, `atendimentoId`, `appointmentId`, `appointment_id`, `A3_ID`.
+
+Resposta de sucesso inclui aliases amplos para compatibilidade:
+
+```json
+{
+  "success": true,
+  "ok": true,
+  "status": "success",
+  "resultadoUrl": "https://...",
+  "resultUrl": "https://...",
+  "imageUrl": "https://...",
+  "url": "https://...",
+  "variacoes": [
+    {
+      "id": "var_1",
+      "url": "https://...",
+      "imageUrl": "https://...",
+      "label": "Variação 1",
+      "nome": "Variação 1",
+      "imagem": "https://..."
+    }
+  ],
+  "metadata": {
+    "provider": "flux",
+    "model": "flux-compatible-http",
+    "durationMs": 1200,
+    "mode": "single_simulation"
+  }
+}
+```
+
+O item de variação mantém `nome` e `imagem` para continuar compatível com a tela atual de resultado.
+
+### Providers
+
+- `mockProvider`: retorna a própria imagem enviada e cria até 3 variações mock. É usado quando `AI_PROVIDER` não é `flux`, quando `FLUX_API_KEY` está ausente ou quando o provider real falha.
+- `fluxProvider`: faz `POST` via `fetch` para `FLUX_API_URL`, usando `FLUX_API_KEY`, com payload isolado para ajuste conforme o provedor FLUX escolhido. A função tenta mapear retornos comuns como `image_url`, `url`, `output`, `images[0].url`, `data`, `artifacts` e base64.
+
+O prompt final preserva rosto, pele, expressão, idade aparente, roupa, fundo, iluminação, ângulo e identidade do cliente, alterando apenas cabelo, cor ou barba conforme o serviço selecionado.
+
+### Variáveis de ambiente
+
+```bash
+AI_PROVIDER=mock
+FLUX_API_KEY=
+FLUX_API_URL=
+FLUX_TIMEOUT_MS=60000
+SUPABASE_URL=...
+SUPABASE_SERVICE_ROLE_KEY=...
+```
+
+`AI_PROVIDER` também aceita o alias legado `IA_PROVIDER`. Para testar sem custo, mantenha `AI_PROVIDER=mock` ou não configure `FLUX_API_KEY`.
+
+### Deploy
+
+```bash
+supabase functions deploy gerar-simulacao
+supabase secrets set AI_PROVIDER=flux FLUX_API_KEY=... FLUX_API_URL=...
+```
+
+Teste mock com URL:
+
+```bash
+curl -i -X POST "$SUPABASE_URL/functions/v1/gerar-simulacao" \
+  -H "Authorization: Bearer $SUPABASE_ANON_KEY" \
+  -H "Content-Type: application/json" \
+  -d '{
+    "foto": "https://exemplo.com/foto-cliente.jpg",
+    "servico": "corte",
+    "estilo": {
+      "nome": "Degradê Moderno",
+      "descricao": "Fade progressivo nas laterais, topo com movimento e textura.",
+      "variacoes": ["Natural", "Texturizado"]
+    },
+    "variacaoEscolhida": "Natural",
+    "atendimentoId": "123"
+  }'
+```
 
 ## Rodando o projeto
 
@@ -55,7 +143,7 @@ Tabelas no Supabase: `L1_LOJA` (conta do salão), `A3_CLIENTE` (clientes, `A3_NA
 
 ## Pendências
 
-- [ ] **Decidir o motor de IA real** (Flux 2 Pro vs Imagen 4 Ultra vs Gemini) — pesar custo por imagem, tempo de resposta (~20-30s ponta a ponta) e fine-tuning futuro. Depois: implementar o provider na Edge Function, `supabase functions deploy gerar-simulacao`, configurar secrets e trocar `USAR_MOCK` para `false` em `geracao.js`
+- [ ] **Configurar provider real de IA**: escolher o endpoint FLUX/HTTP definitivo, configurar `AI_PROVIDER=flux`, `FLUX_API_KEY` e `FLUX_API_URL`, validar custo/latência (~20-30s ponta a ponta) e então trocar `USAR_MOCK` para `false` em `frontend/src/lib/geracao.js`
 - [ ] **Validação real da foto** na captura (exatamente 1 rosto, nitidez, iluminação) — hoje só há dicas visuais; a doc exige bloqueio antes de enviar à IA
 - [ ] **Recência real no histórico**: criar coluna de data do último atendimento (ex.: `A3_ULTATEND`) e ordenar Recentes/Histórico por ela (hoje ordena por `id`)
 - [ ] **Tela 06 — Guia Técnico do profissional** (passo a passo de execução, ferramentas, protocolo de coloração) vinculado ao estilo aprovado

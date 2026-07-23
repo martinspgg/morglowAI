@@ -1,103 +1,322 @@
-// Supabase Edge Function — gerar-simulacao
-//
-// Recebe a foto do cliente + estilo escolhido e retorna 2-4 variações geradas
-// por IA (doc v4.0, seção 5: preservar identidade, alterar só cabelo/barba,
-// meta de ~20-30s ponta a ponta).
-//
-// O motor de IA ainda não foi definido (candidatos: Flux 2 Pro, Imagen 4 Ultra,
-// Gemini). Enquanto a decisão não sai, o provider "mock" devolve a própria foto
-// como variação — o contrato com o frontend já fica fechado.
-//
-// Deploy:  supabase functions deploy gerar-simulacao
-// Secrets: supabase secrets set IA_PROVIDER=mock (ou flux/gemini + API keys)
+import { buildPrompt } from './prompts/buildPrompt.ts'
+import { generateWithFlux } from './providers/fluxProvider.ts'
+import { generateWithMock } from './providers/mockProvider.ts'
+import type {
+  GeneratedVariation,
+  LoosePayload,
+  NormalizedPayload,
+  ProviderInput,
+  ProviderResult,
+  ServiceType,
+  SuccessResponse
+} from './types.ts'
+import { errorMessage, errorResponse, jsonResponse, optionsResponse } from './utils/http.ts'
 
-interface RequisicaoGeracao {
-  foto: string // dataURL (base64) da foto do cliente
-  servico: string // corte | coloracao | barba | corte-barba
-  estilo: {
-    nome: string
-    descricao: string
-    variacoes: string[]
+const IMAGE_FIELDS = [
+  'foto',
+  'image',
+  'imageUrl',
+  'image_url',
+  'fotoUrl',
+  'originalImage',
+  'original_image',
+  'base64'
+]
+
+const SERVICE_FIELDS = ['servico', 'service', 'serviceType', 'tipoServico']
+const STYLE_FIELDS = ['estilo', 'style', 'selectedStyle', 'selected_style']
+const COLOR_FIELDS = [
+  'cor',
+  'color',
+  'selectedColor',
+  'selected_color',
+  'variacaoCor',
+  'variacaoEscolhida',
+  'variation',
+  'selectedVariation',
+  'selected_variation'
+]
+const APPOINTMENT_FIELDS = ['atendimentoId', 'appointmentId', 'appointment_id', 'A3_ID']
+
+class InputError extends Error {
+  code: string
+
+  constructor(message: string, code: string) {
+    super(message)
+    this.name = 'InputError'
+    this.code = code
   }
-  variacaoEscolhida: string
 }
 
-interface Variacao {
-  nome: string
-  imagem: string // dataURL ou URL pública da imagem gerada
+function isRecord(value: unknown): value is LoosePayload {
+  return Boolean(value) && typeof value === 'object' && !Array.isArray(value)
 }
 
-const CORS = {
-  'Access-Control-Allow-Origin': '*',
-  'Access-Control-Allow-Headers': 'authorization, x-client-info, apikey, content-type'
+function getFirstValue(payload: LoosePayload, fields: string[]): unknown {
+  for (const field of fields) {
+    const value = payload[field]
+    if (value !== undefined && value !== null && value !== '') return value
+  }
+
+  return undefined
 }
 
-function montarPrompt(req: RequisicaoGeracao, variacao: string): string {
+function toText(value: unknown): string | undefined {
+  if (typeof value === 'string') {
+    const trimmed = value.trim()
+    return trimmed || undefined
+  }
+
+  if (typeof value === 'number' || typeof value === 'boolean') {
+    return String(value)
+  }
+
+  return undefined
+}
+
+function getObjectText(value: unknown, fields: string[]): string | undefined {
+  if (!isRecord(value)) return undefined
+
+  return toText(getFirstValue(value, fields))
+}
+
+function extractStringList(value: unknown): string[] {
+  if (!Array.isArray(value)) return []
+
+  return value
+    .map((item) => {
+      if (typeof item === 'string') return item.trim()
+      if (isRecord(item)) {
+        return (
+          getObjectText(item, ['nome', 'name', 'label', 'title']) ||
+          getObjectText(item, ['descricao', 'description', 'desc'])
+        )
+      }
+      return undefined
+    })
+    .filter((item): item is string => Boolean(item))
+}
+
+function extractStyleVariations(style: unknown): string[] {
+  if (!isRecord(style)) return []
+
+  const variationValue =
+    style.variacoes ||
+    style.vaCor ||
+    style.variations ||
+    style.cores ||
+    style.colors ||
+    style.tons ||
+    style.tonalidades
+
+  return extractStringList(variationValue)
+}
+
+function normalizeService(value: unknown): { service: ServiceType; serviceLabel: string } {
+  const label = toText(value) || 'unknown'
+  const normalized = label
+    .normalize('NFD')
+    .replace(/\p{Diacritic}/gu, '')
+    .toLowerCase()
+    .replace(/\s+/g, '_')
+
+  if (['haircut', 'corte', 'corte_cabelo', 'cabelo'].includes(normalized)) {
+    return { service: 'haircut', serviceLabel: label }
+  }
+
+  if (['color', 'coloracao', 'coloração', 'tintura', 'cor'].includes(normalized)) {
+    return { service: 'color', serviceLabel: label }
+  }
+
+  if (['beard', 'barba'].includes(normalized)) {
+    return { service: 'beard', serviceLabel: label }
+  }
+
+  if (
+    [
+      'haircut_beard',
+      'corte_barba',
+      'corte_e_barba',
+      'corte+barba',
+      'corte-barba',
+      'misto'
+    ].includes(normalized)
+  ) {
+    return { service: 'haircut_beard', serviceLabel: label }
+  }
+
+  return { service: 'unknown', serviceLabel: label }
+}
+
+function describeLooseValue(value: unknown): string | undefined {
+  const text = toText(value)
+  if (text) return text
+
+  if (!isRecord(value)) return undefined
+
+  return (
+    getObjectText(value, ['nome', 'name', 'title', 'label']) ||
+    getObjectText(value, ['descricao', 'description', 'desc'])
+  )
+}
+
+async function readPayload(request: Request): Promise<LoosePayload> {
+  try {
+    const payload = await request.json()
+    if (!isRecord(payload)) {
+      throw new InputError('Payload JSON invalido.', 'INVALID_JSON_PAYLOAD')
+    }
+
+    return payload
+  } catch (error) {
+    if (error instanceof InputError) throw error
+    throw new InputError('Body JSON invalido ou ausente.', 'INVALID_JSON_BODY')
+  }
+}
+
+function normalizePayload(payload: LoosePayload): NormalizedPayload {
+  const image = toText(getFirstValue(payload, IMAGE_FIELDS))
+
+  if (!image) {
+    throw new InputError('Imagem não enviada.', 'IMAGE_NOT_SENT')
+  }
+
+  const rawService = getFirstValue(payload, SERVICE_FIELDS)
+  const { service, serviceLabel } = normalizeService(rawService)
+  const style = getFirstValue(payload, STYLE_FIELDS)
+  const color = getFirstValue(payload, COLOR_FIELDS)
+  const appointmentId = toText(getFirstValue(payload, APPOINTMENT_FIELDS))
+
+  return {
+    image,
+    service,
+    serviceLabel,
+    style,
+    styleName: getObjectText(style, ['nome', 'name', 'title', 'label']) || describeLooseValue(style),
+    styleDescription: getObjectText(style, ['descricao', 'description', 'desc']),
+    styleVariations: extractStyleVariations(style),
+    color,
+    colorLabel: describeLooseValue(color),
+    variationLabel: toText(payload.variacaoEscolhida) || describeLooseValue(color),
+    appointmentId,
+    raw: payload
+  }
+}
+
+function getRequestedProvider(): string {
+  return (Deno.env.get('AI_PROVIDER') || Deno.env.get('IA_PROVIDER') || 'mock').trim().toLowerCase()
+}
+
+function canUseFlux(provider: string): boolean {
+  return provider === 'flux' && Boolean(Deno.env.get('FLUX_API_KEY')?.trim())
+}
+
+function normalizeVariations(result: ProviderResult, fallbackImage: string): GeneratedVariation[] {
+  if (result.variations.length > 0) return result.variations
+
   return [
-    `Edite a foto alterando SOMENTE o cabelo/barba da pessoa.`,
-    `Preserve totalmente a identidade: rosto, tom de pele e estrutura óssea.`,
-    `Serviço: ${req.servico}. Estilo: ${req.estilo.nome} — ${req.estilo.descricao}.`,
-    `Variação a aplicar: ${variacao}.`,
-    `Resultado fotorrealista, mesma pose, mesmo fundo e mesma iluminação.`
-  ].join(' ')
+    {
+      id: 'var_1',
+      url: result.imageUrl || fallbackImage,
+      imageUrl: result.imageUrl || fallbackImage,
+      label: 'Variação 1',
+      nome: 'Variação 1',
+      imagem: result.imageUrl || fallbackImage
+    }
+  ]
 }
 
-// ── Providers ───────────────────────────────────────────────────────────────
+function buildSuccessResponse(
+  result: ProviderResult,
+  input: NormalizedPayload,
+  durationMs: number,
+  fallback?: { requestedProvider: string; error: string }
+): SuccessResponse {
+  const variations = normalizeVariations(result, input.image)
+  const imageUrl = result.imageUrl || variations[0].imageUrl
 
-async function providerMock(req: RequisicaoGeracao): Promise<Variacao[]> {
-  const nomes = [
-    req.variacaoEscolhida,
-    ...req.estilo.variacoes.filter((v) => v !== req.variacaoEscolhida)
-  ].slice(0, 3)
-
-  return nomes.map((nome) => ({ nome, imagem: req.foto }))
-}
-
-// TODO (decidir motor com o Rafael antes da Fase 2):
-// async function providerFlux(req) — Flux via Replicate/fal.ai: enviar foto +
-//   montarPrompt(), modo image-to-image com máscara de cabelo, 2-4 outputs.
-// async function providerGemini(req) — Gemini image editing: uma chamada por
-//   variação com montarPrompt(), retorno em base64.
-
-async function gerar(req: RequisicaoGeracao): Promise<Variacao[]> {
-  const provider = Deno.env.get('IA_PROVIDER') ?? 'mock'
-
-  switch (provider) {
-    case 'mock':
-      return providerMock(req)
-    default:
-      throw new Error(`Provider de IA não implementado: ${provider}`)
+  return {
+    success: true,
+    ok: true,
+    status: 'success',
+    resultadoUrl: imageUrl,
+    resultUrl: imageUrl,
+    imageUrl,
+    url: imageUrl,
+    variacoes: variations,
+    variations,
+    metadata: {
+      provider: result.provider,
+      model: result.model,
+      durationMs,
+      mode: 'single_simulation',
+      appointmentId: input.appointmentId,
+      fallback: fallback ? true : undefined,
+      requestedProvider: fallback?.requestedProvider,
+      error: fallback?.error
+    }
   }
 }
 
-// ── Handler ─────────────────────────────────────────────────────────────────
+async function generate(input: ProviderInput): Promise<{
+  result: ProviderResult
+  fallback?: { requestedProvider: string; error: string }
+}> {
+  const requestedProvider = getRequestedProvider()
 
-Deno.serve(async (request) => {
-  if (request.method === 'OPTIONS') {
-    return new Response('ok', { headers: CORS })
+  if (!canUseFlux(requestedProvider)) {
+    return { result: await generateWithMock(input) }
   }
 
   try {
-    const req = (await request.json()) as RequisicaoGeracao
+    return { result: await generateWithFlux(input) }
+  } catch (error) {
+    console.error('Falha no provider FLUX, usando mock:', error)
 
-    if (!req.foto || !req.estilo?.nome) {
-      return new Response(
-        JSON.stringify({ error: 'Foto e estilo são obrigatórios.' }),
-        { status: 400, headers: { ...CORS, 'Content-Type': 'application/json' } }
-      )
+    return {
+      result: await generateWithMock(input),
+      fallback: {
+        requestedProvider,
+        error: errorMessage(error)
+      }
+    }
+  }
+}
+
+Deno.serve(async (request) => {
+  if (request.method === 'OPTIONS') {
+    return optionsResponse()
+  }
+
+  if (request.method !== 'POST') {
+    return errorResponse('Metodo nao permitido.', 'METHOD_NOT_ALLOWED', 405)
+  }
+
+  const startedAt = Date.now()
+
+  try {
+    const payload = await readPayload(request)
+    const normalizedPayload = normalizePayload(payload)
+    const providerInput: ProviderInput = {
+      ...normalizedPayload,
+      prompt: buildPrompt(normalizedPayload)
     }
 
-    const variacoes = await gerar(req)
+    const { result, fallback } = await generate(providerInput)
+    const durationMs = Date.now() - startedAt
 
-    return new Response(JSON.stringify({ variacoes }), {
-      headers: { ...CORS, 'Content-Type': 'application/json' }
-    })
-  } catch (err) {
-    console.error('Erro na geração:', err)
+    return jsonResponse(buildSuccessResponse(result, normalizedPayload, durationMs, fallback))
+  } catch (error) {
+    console.error('Erro na geração da simulação:', error)
 
-    return new Response(
-      JSON.stringify({ error: 'Falha ao gerar a simulação.' }),
-      { status: 500, headers: { ...CORS, 'Content-Type': 'application/json' } }
+    if (error instanceof InputError) {
+      return errorResponse(error.message, error.code, 400)
+    }
+
+    return errorResponse(
+      'Não foi possível gerar a simulação. Sua foto foi preservada; tente novamente.',
+      errorMessage(error),
+      200
     )
   }
 })
